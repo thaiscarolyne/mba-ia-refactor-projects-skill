@@ -1,9 +1,12 @@
-"""Script para popular o banco com dados iniciais"""
+import logging
+
 from app import app, db
 from models.task import Task
 from models.user import User
 from models.category import Category
 from datetime import datetime, timedelta
+
+logger = logging.getLogger(__name__)
 
 def seed_data():
     with app.app_context():
@@ -90,10 +93,10 @@ def seed_data():
             db.session.add(t)
 
         db.session.commit()
-        print("Seed concluído com sucesso!")
-        print(f"  {User.query.count()} usuários")
-        print(f"  {Category.query.count()} categorias")
-        print(f"  {Task.query.count()} tasks")
+        logger.info("Seed concluído com sucesso!")
+        logger.info("  %s usuários", User.query.count())
+        logger.info("  %s categorias", Category.query.count())
+        logger.info("  %s tasks", Task.query.count())
 
 if __name__ == '__main__':
     seed_data()
